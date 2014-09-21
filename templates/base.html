@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>War Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Celeo">
+
+    <link href="{{ url_for('static', filename='wartracker/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='wartracker/css/app.css') }}">
+    <script src="{{ url_for('static', filename='wartracker/js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='wartracker/js/bootstrap.min.js') }}"></script>
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="{{ url_for('index') }}" class="navbar-brand">Op Tracker</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li{% if page == 'home' %} class="active"{% endif %}><a href="{{ url_for('index') }}">Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <!-- <li><a href="#">TEXT</a></li> -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+<center>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            <button type="button" class="close" onclick="$(this).parent().fadeOut(250);">&times;</button>
+            {{ message }}<br />
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</center>
+
+{% block content %}{% endblock %}
+
+<hr style="border: 1px solid gray;">
+
+<footer>
+    <p>&copy; <a href="https://github.com/Celeo">Celeo</a> 2014 
+    <a href="https://github.com/Celeo/WarTracker">We're open source!</a></p>
+    <p>
+        This website uses <a href="http://flask.pocoo.org/" title="Python web development framework">Flask</a> and 
+        <a href="http://twitter.github.io/bootstrap/" title="CSS framework">Bootstrap</a>.<br>
+        It runs in deployment using <a href="http://nginx.org/" title="Manages static files">Nginx</a> and 
+        <a href="https://github.com/unbit/uwsgi-docs" title="Runs the Django app">uWSGI</a>.<br>
+        For suggestions and comments, add an issue on the repository.
+    </p>
+    {% block extraFooter %}{% endblock %}
+</footer>
+</div>
+{% block loadLaterJavascript %}{% endblock %}
+
+</body>
+
+</html>
