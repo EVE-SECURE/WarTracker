@@ -8,7 +8,7 @@ app.config.from_pyfile('config.cfg')
 
 # flask-sqlalchemy
 from shared import db
-from models improt *
+from models import *
 db.app = app
 db.init_app(app)
 
@@ -17,19 +17,26 @@ api = eveapi.EVEAPIConnection()
 
 @app.route('/')
 def index():
-    return 'Index page'
+    return render_template('index.html')
 
-@app.route('kill/<id>/battle')
-def battle(id):
-    return 'Battle report for kill #{}'.format(id)
 
-@app.route('kill/<id>')
+@app.route('/kill/<id>/report')
+def report(id):
+    return render_template('report.html', id=id)
+
+
+@app.route('/kill/<id>')
 def kill(id):
-    return 'Kill page for kill #{}'.format(id)
+    return render_template('kill.html', id=id)
 
-@app.route('pilot/<name>')
-def pilot(id):
-    return 'Pilot page for pilot named {}'.format(name)
+
+@app.route('/pilot/<name>')
+def pilot(name):
+    return render_template('pilot.html', name=name)
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0', port=1234)
 
 # update code - needs to be converted to actual DB models instead of loose objects
 # api = eveapi.EVEAPIConnection()
