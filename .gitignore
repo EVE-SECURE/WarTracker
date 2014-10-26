@@ -1,2 +1,3 @@
 *.pyc
 *.sublime-*
+config_deploy.cfg
